@@ -30,6 +30,10 @@ jobs:
           java-version: '17'
           cache: maven
 
+      - name: Grant execute permission to mvnw
+        working-directory: ${{ matrix.service }}
+        run: chmod +x mvnw
+
       - name: Build, test and compile check
         working-directory: ${{ matrix.service }}
         run: ./mvnw --batch-mode --no-transfer-progress clean test compile
