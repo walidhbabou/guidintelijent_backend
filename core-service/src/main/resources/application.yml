@@ -24,4 +24,21 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+jwt:
+  secret: ${JWT_SECRET:j9DJrShbo8zent0ckOlpw5vayQMIdH3ZEiX4NLVB1CPK7AxqYfgmGU6uFRTsW2}
+  accessTokenExpirationMs: 3600000
+  refreshTokenExpirationMs: 86400000
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000

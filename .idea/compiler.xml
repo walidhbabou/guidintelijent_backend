@@ -11,7 +11,7 @@
         <module name="authentification" />
         <module name="api_gateway" />
       </profile>
-      <profile name="Annotation profile for authentification" enabled="true">
+      <profile name="Annotation profile for ai-place-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

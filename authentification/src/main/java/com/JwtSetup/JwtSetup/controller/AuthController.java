@@ -138,4 +138,29 @@ public class AuthController {
         return response;
     }
 
+    @PostMapping("/validate")
+    public Map<String, Object> validateToken(@RequestHeader("Authorization") String token) {
+        try {
+            String jwt = token.replace("Bearer ", "");
+            boolean isValid = jwtUtils.validateJwtToken(jwt);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("valid", isValid);
+
+            if (isValid) {
+                String username = jwtUtils.getUsernameFromToken(jwt);
+                User user = userRepository.findByUsername(username).orElseThrow();
+                response.put("userId", user.getId());
+                response.put("username", user.getUsername());
+            }
+
+            return response;
+        } catch (Exception e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("valid", false);
+            response.put("error", e.getMessage());
+            return response;
+        }
+    }
+
 }
