@@ -13,11 +13,7 @@ import org.springframework.stereotype.Service;
 public class MoroccoAiGuideService {
 
     private final MoroccoAiGuideClient moroccoAiGuideClient;
-
-    public String checkHealth() {
-        return moroccoAiGuideClient.health();
-    }
-
+    
     public AskResponseDto ask(AskRequestDto request) {
         log.info("Calling Morocco AI Guide API with question: {}", request.getQuestion());
         return moroccoAiGuideClient.ask(request);

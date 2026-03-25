@@ -28,5 +28,5 @@ feign:
         readTimeout: 5000
 
 morocco-ai-guide:
-  base-url: https://ai-scraping-data.onrender.com
+  base-url: https://llm-ai-guid.onrender.com
 

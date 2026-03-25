@@ -9,17 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "morocco-ai-guide-client",
-        url = "${morocco-ai-guide.base-url:https://ai-scraping-data.onrender.com}"
+        url = "${morocco-ai-guide.base-url:https://llm-ai-guid.onrender.com}"
 )
 public interface MoroccoAiGuideClient {
 
-    @GetMapping("/")
-    String root();
-
-    @GetMapping("/health")
-    String health();
-
-    @PostMapping("/ask")
+    @PostMapping("/api/ai/search")
     AskResponseDto ask(@RequestBody AskRequestDto request);
 }
 

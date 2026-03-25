@@ -14,10 +14,6 @@ public class MoroccoAiGuideController {
 
     private final MoroccoAiGuideService moroccoAiGuideService;
 
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok(moroccoAiGuideService.checkHealth());
-    }
 
     @PostMapping("/ask")
     public ResponseEntity<AskResponseDto> ask(@RequestBody AskRequestDto request) {

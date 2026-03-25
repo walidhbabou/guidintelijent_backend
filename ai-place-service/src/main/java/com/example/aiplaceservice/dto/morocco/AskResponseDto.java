@@ -7,27 +7,27 @@ import java.util.List;
 @Data
 public class AskResponseDto {
 
-    private String answer;
-    private Integer count;
-    private String dataset_file;
-    private Filters filters;
-    private List<MatchItem> matches;
+    private String intent;
+    private String city;
+    private String category;
+    private List<String> preferences;
+    private Integer result_limit;
+    private Boolean near_me;
+    private Integer results_count;
+    private List<ResultItem> results;
+    private String message;
 
     @Data
-    public static class Filters {
-        private String category;
-        private String city;
-    }
-
-    @Data
-    public static class MatchItem {
+    public static class ResultItem {
         private String name;
-        private String category;
-        private String city;
-        private String lat_lon;
+        private String description;
+        private String address;
         private Double latitude;
         private Double longitude;
-        private String address;
-        private Double score;
+        private Double rating;
+        private List<String> types;
+        private String photo_url;
+        private String place_id;
+        private String google_maps_url;
     }
 }

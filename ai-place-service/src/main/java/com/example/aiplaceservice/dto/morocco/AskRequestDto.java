@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AskRequestDto {
 
-    private String question;
-    private Integer top_k; // nombre de résultats à retourner
+    private String query;
+    private Double user_latitude;
+    private Double user_longitude;
 }
