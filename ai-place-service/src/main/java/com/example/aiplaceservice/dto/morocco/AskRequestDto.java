@@ -12,4 +12,5 @@ public class AskRequestDto {
     private String query;
     private Double user_latitude;
     private Double user_longitude;
+    private String question;
 }
