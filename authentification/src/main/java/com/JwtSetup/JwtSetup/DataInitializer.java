@@ -46,6 +46,9 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.findByUsername("admin").isEmpty()) {
             User admin = new User();
             admin.setUsername("admin");
+            admin.setEmail("admin@appguid.local");
+            admin.setFullName("Administrator");
+            admin.setPhone("0000000000");
             admin.setPassword(passwordEncoder.encode("2002"));
             admin.setEnabled(true);
             Set<Role> roles = new HashSet<>();
@@ -59,6 +62,9 @@ public class DataInitializer implements CommandLineRunner {
         if (userRepository.findByUsername("user").isEmpty()) {
             User user = new User();
             user.setUsername("user");
+            user.setEmail("user@appguid.local");
+            user.setFullName("Standard User");
+            user.setPhone("0000000001");
             user.setPassword(passwordEncoder.encode("1234"));
             user.setEnabled(true);
             Set<Role> roles = new HashSet<>();

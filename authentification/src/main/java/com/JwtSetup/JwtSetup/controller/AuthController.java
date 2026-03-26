@@ -64,15 +64,30 @@ public class AuthController {
 
     @PostMapping("/signup")
     public Map<String, String> registerUser(@RequestBody Map<String, String> request) {
+        String username = request.get("username");
+        String email = request.get("email");
+        String password = request.get("password");
+
+        if (username == null || username.isBlank() || email == null || email.isBlank() || password == null || password.isBlank()) {
+            throw new RuntimeException("username, email and password are required");
+        }
+
         // Vérifier si l'utilisateur existe déjà
-        if (userRepository.findByUsername(request.get("username")).isPresent()) {
+        if (userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username already exists");
+        }
+
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("Email already exists");
         }
 
         // Créer le nouvel utilisateur
         User user = new User();
-        user.setUsername(request.get("username"));
-        user.setPassword(passwordEncoder.encode(request.get("password")));
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setFullName(request.get("fullName"));
+        user.setPhone(request.get("phone"));
+        user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(true);
 
         // Assigner le rôle USER par défaut
@@ -87,6 +102,7 @@ public class AuthController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "User registered successfully");
         response.put("username", user.getUsername());
+        response.put("email", user.getEmail());
         return response;
     }
 
