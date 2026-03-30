@@ -65,13 +65,28 @@ public class DataInitializer implements CommandLineRunner {
             user.setEmail("user@appguid.local");
             user.setFullName("Standard User");
             user.setPhone("0000000001");
-            user.setPassword(passwordEncoder.encode("1234"));
+            user.setPassword(passwordEncoder.encode("123456"));
             user.setEnabled(true);
             Set<Role> roles = new HashSet<>();
             roles.add(roleRepository.findByName("ROLE_USER").get());
             user.setRoles(roles);
             userRepository.save(user);
             System.out.println("Utilisateur user créé !");
+        }
+
+        if (userRepository.findByUsername("sophie").isEmpty()) {
+            User guideUser = new User();
+            guideUser.setUsername("sophie");
+            guideUser.setEmail("sophie@guide.ma");
+            guideUser.setFullName("Sophie Dubois");
+            guideUser.setPhone("0600000000");
+            guideUser.setPassword(passwordEncoder.encode("123456"));
+            guideUser.setEnabled(true);
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleRepository.findByName("ROLE_USER").get());
+            guideUser.setRoles(roles);
+            userRepository.save(guideUser);
+            System.out.println("Utilisateur sophie cree !");
         }
     }
 }

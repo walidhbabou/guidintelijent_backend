@@ -40,25 +40,35 @@ public class AuthController {
 
     @PostMapping("/signin")
     public Map<String, String> authenticateUser(@RequestBody Map<String, String> request) {
+        String identifier = request.get("username");
+        String password = request.get("password");
+
+        if (identifier == null || identifier.isBlank() || password == null || password.isBlank()) {
+            throw new RuntimeException("username/email and password are required");
+        }
+
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.get("username"), request.get("password")));
+                    new UsernamePasswordAuthenticationToken(identifier, password));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String accessToken = jwtUtils.generateAccessToken(authentication);
             String refreshToken = jwtUtils.generateRefreshToken(authentication);
 
-            User user = userRepository.findByUsername(request.get("username")).orElseThrow();
+            User user = findUserByIdentifier(identifier);
             user.setRefreshToken(passwordEncoder.encode(refreshToken));
             userRepository.save(user);
 
             Map<String, String> tokens = new HashMap<>();
             tokens.put("accessToken", accessToken);
             tokens.put("refreshToken", refreshToken);
+            tokens.put("username", user.getUsername());
+            tokens.put("email", user.getEmail());
+            tokens.put("fullName", user.getFullName() != null ? user.getFullName() : user.getUsername());
             return tokens;
 
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Email or password invalid");
+            throw new RuntimeException("Nom d utilisateur, email ou mot de passe invalide");
         }
     }
 
@@ -177,6 +187,12 @@ public class AuthController {
             response.put("error", e.getMessage());
             return response;
         }
+    }
+
+    private User findUserByIdentifier(String identifier) {
+        return userRepository.findByUsername(identifier)
+                .or(() -> userRepository.findByEmail(identifier))
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
 }

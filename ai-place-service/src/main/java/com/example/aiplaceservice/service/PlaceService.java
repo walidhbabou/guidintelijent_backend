@@ -16,12 +16,20 @@ public class PlaceService {
     private final PlaceRepository placeRepository;
 
     /**
-     * Récupère toutes les places depuis la base de données
+     * Récupère toutes les places depuis la base de données avec filtres optionnels
+     * @param city Filtre par ville
+     * @param category Filtre par catégorie
+     * @param q Recherche par nom (contient)
      */
-    public AskResponseDto getAllPlaces(String city, String category) {
+    public AskResponseDto getAllPlaces(String city, String category, String q) {
         List<Place> places;
 
-        if (city != null && category != null) {
+        // Priorité: recherche par nom (q) si fourni
+        if (q != null && !q.isEmpty()) {
+            places = placeRepository.findByNameContainingIgnoreCase(q);
+        }
+        // Sinon, filtrer par city et/ou category
+        else if (city != null && category != null) {
             places = placeRepository.findByCityAndCategory(city, category);
         } else if (city != null) {
             places = placeRepository.findByCity(city);
@@ -32,6 +40,13 @@ public class PlaceService {
         }
 
         return buildResponse(places, city, category);
+    }
+
+    /**
+     * Récupère toutes les places depuis la base de données (v1 sans paramètre q)
+     */
+    public AskResponseDto getAllPlaces(String city, String category) {
+        return getAllPlaces(city, category, null);
     }
 
     /**

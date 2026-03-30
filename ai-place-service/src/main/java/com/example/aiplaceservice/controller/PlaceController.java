@@ -1,5 +1,6 @@
 package com.example.aiplaceservice.controller;
 
+import com.example.aiplaceservice.dto.morocco.AskResponseDto;
 import com.example.aiplaceservice.entity.Place;
 import com.example.aiplaceservice.service.PlaceService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,18 @@ import org.springframework.web.bind.annotation.*;
 public class PlaceController {
 
     private final PlaceService placeService;
+
+    /**
+     * Récupère toutes les places avec filtres optionnels (city, category, q)
+     * q = recherche par nom
+     */
+    @GetMapping
+    public ResponseEntity<AskResponseDto> getPlaces(
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String q) {
+        return ResponseEntity.ok(placeService.getAllPlaces(city, category, q));
+    }
 
     /**
      * Crée une nouvelle place

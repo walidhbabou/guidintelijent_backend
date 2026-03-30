@@ -8,9 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="discovery-service" />
-        <module name="api_gateway" />
       </profile>
-      <profile name="Annotation profile for ai-place-service" enabled="true">
+      <profile name="Annotation profile for core-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,16 +19,11 @@
         <module name="ai-place-service" />
         <module name="core-service" />
       </profile>
-      <profile name="Annotation profile for authentification" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
-        </processorPath>
-        <module name="authentification" />
-      </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api_gateway" target="17" />
+      <module name="authentification" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
